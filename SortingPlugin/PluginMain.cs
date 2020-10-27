@@ -52,6 +52,7 @@ namespace SortingPlugin {
       ctrl.DropDownItems.Add(GetSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
+      ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
 
       var sortButton = new ToolStripMenuItem("National Pokédex");
