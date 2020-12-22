@@ -466,7 +466,6 @@ namespace SortingPlugin {
       {Species.Keldeo, 298},
       {Species.Meloetta, 299},
       {Species.Genesect, 300},
-
     };
 
     public static Func<PKM, IComparable>[] GetBWSortFunctions() {

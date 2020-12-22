@@ -262,7 +262,7 @@ namespace SortingPlugin {
       {Species.Mewtwo, 254},
       {Species.Mew, 255},
       {Species.Celebi, 256},
-          };
+    };
 
     public static Func<PKM, IComparable>[] GetSortFunctions() {
       return GenerateSortingFunctions(newPokedex);

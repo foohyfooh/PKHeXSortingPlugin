@@ -162,7 +162,7 @@ namespace SortingPlugin {
     };
 
     private static readonly Dictionary<Species, int> CostalKalosDex = new Dictionary<Species, int>() {
-       {Species.Drifloon, 1},
+      {Species.Drifloon, 1},
       {Species.Drifblim, 2},
       {Species.Mienfoo, 3},
       {Species.Mienshao, 4},
