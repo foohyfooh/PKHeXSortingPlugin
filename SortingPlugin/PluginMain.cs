@@ -54,6 +54,7 @@ namespace SortingPlugin {
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
       ctrl.DropDownItems.Add(GetSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+      ctrl.DropDownItems.Add(GetSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
 
       var sortButton = new ToolStripMenuItem("National Pokédex");
       sortButton.Click += (s, e) => SortByNationalDex();
