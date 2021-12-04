@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 
 namespace SortingPlugin {
-
   class Gen8_Galar : SortingBase {
 
     private static readonly Dictionary<Species, int> GalarDex = new Dictionary<Species, int>() {
