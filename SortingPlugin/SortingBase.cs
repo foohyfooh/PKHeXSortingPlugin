@@ -5,11 +5,11 @@ using System.Collections.Generic;
 namespace SortingPlugin {
   class SortingBase {
 
-    protected static bool SpeciesExistsInDex(Dictionary<Species, int> dex, PKM pkm) {
+    private static bool SpeciesExistsInDex(Dictionary<Species, int> dex, PKM pkm) {
       return !dex.ContainsKey((Species)pkm.Species);
     }
 
-    protected static int GetDexNumberOrSpecies(Dictionary<Species, int> dex, PKM pkm) {
+    private static int GetDexNumberOrSpecies(Dictionary<Species, int> dex, PKM pkm) {
       return dex.ContainsKey((Species)pkm.Species) ? dex[(Species)pkm.Species] : pkm.Species;
     }
 
