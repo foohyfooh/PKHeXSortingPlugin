@@ -41,7 +41,9 @@ namespace SortingPlugin {
       int gen = SaveFileEditor.SAV.Generation;
       GameVersion version = SaveFileEditor.SAV.Version;
       bool isLetsGo = version == GameVersion.GP || version == GameVersion.GE;
+      bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
       bool isBDSP = version == GameVersion.BD || version == GameVersion.SP;
+      bool isPLA = version == GameVersion.PLA;
       bool isRestrictedDex = isLetsGo || isBDSP;
 
       menuTools.DropDownItems.RemoveByKey("SortBoxesBy");
@@ -81,17 +83,21 @@ namespace SortingPlugin {
           sortItems.Add(GetSortButton("Gen 6 Hoenn", Gen6_Hoenn.GetSortFunctions()));
         }
       
-        if (gen >= 7) {
+        if (gen >= 7 && !isPLA) {
           sortItems.Add(GetSortButton("Gen 7 Alola Sun/Moon", Gen7_Alola.GetFullSMSortFunctions()));
           sortItems.Add(GetSortButton("Gen 7 Alola Ultra Sun/Ultra Moon", Gen7_Alola.GetFullUSUMSortFunctions()));
         }
 
         if (gen >= 8) {
-          sortItems.Add(GetSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
-          sortItems.Add(GetSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+          if (isSwSh) {
+            sortItems.Add(GetSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
+            sortItems.Add(GetSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
+            sortItems.Add(GetSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
+            sortItems.Add(GetSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
+            sortItems.Add(GetSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+          } else if (isPLA) {
+            sortItems.Add(GetSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
+          }
         }
       } else {
         if (isLetsGo) {
