@@ -50,6 +50,7 @@ namespace SortingPlugin {
       ToolStripMenuItem sortBoxesItem = new ToolStripMenuItem("Sort Boxes By") {
         Name = "SortBoxesBy"
       };
+      sortBoxesItem.Image = Properties.Resources.SortIcon;
       menuTools.DropDownItems.Add(sortBoxesItem);
       ToolStripItemCollection sortItems = sortBoxesItem.DropDownItems;
 
