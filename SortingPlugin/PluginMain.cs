@@ -41,10 +41,6 @@ namespace SortingPlugin {
       int gen = SaveFileEditor.SAV.Generation;
       GameVersion version = SaveFileEditor.SAV.Version;
       bool isLetsGo = version == GameVersion.GP || version == GameVersion.GE;
-      bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
-      bool isBDSP = version == GameVersion.BD || version == GameVersion.SP;
-      bool isPLA = version == GameVersion.PLA;
-      bool isRestrictedDex = isLetsGo || isBDSP;
 
       menuTools.DropDownItems.RemoveByKey("SortBoxesBy");
       ToolStripMenuItem sortBoxesItem = new ToolStripMenuItem("Sort Boxes By") {
@@ -54,8 +50,14 @@ namespace SortingPlugin {
       menuTools.DropDownItems.Add(sortBoxesItem);
       ToolStripItemCollection sortItems = sortBoxesItem.DropDownItems;
 
-      if (!isRestrictedDex) { 
-        if(gen >= 1) {
+      if (isLetsGo) {
+        sortItems.Add(GetSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
+      } else {
+        bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
+        bool isBDSP = version == GameVersion.BD || version == GameVersion.SP;
+        bool isPLA = version == GameVersion.PLA;
+
+        if (gen >= 1) {
           sortItems.Add(GetSortButton("Gen 1 Kanto", Gen1_Kanto.GetSortFunctions()));
         }
 
@@ -74,17 +76,17 @@ namespace SortingPlugin {
           sortItems.Add(GetSortButton("Gen 4 Johto", Gen4_Johto.GetSortFunctions()));
         }
 
-        if (gen >= 5) {
+        if (gen >= 5 && !isBDSP) {
           sortItems.Add(GetSortButton("Gen 5 Unova Black/White", Gen5_Unova.GetBWSortFunctions()));
           sortItems.Add(GetSortButton("Gen 5 Unova Black 2/White 2", Gen5_Unova.GetB2W2SortFunctions()));
         }
       
-        if (gen >= 6) {
+        if (gen >= 6 && !isBDSP) {
           sortItems.Add(GetSortButton("Gen 6 Kalos", Gen6_Kalos.GetSortFunctions()));
           sortItems.Add(GetSortButton("Gen 6 Hoenn", Gen6_Hoenn.GetSortFunctions()));
         }
       
-        if (gen >= 7 && !isPLA) {
+        if (gen >= 7 && !isBDSP && !isPLA) {
           sortItems.Add(GetSortButton("Gen 7 Alola Sun/Moon", Gen7_Alola.GetFullSMSortFunctions()));
           sortItems.Add(GetSortButton("Gen 7 Alola Ultra Sun/Ultra Moon", Gen7_Alola.GetFullUSUMSortFunctions()));
         }
@@ -96,29 +98,18 @@ namespace SortingPlugin {
             sortItems.Add(GetSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
             sortItems.Add(GetSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
             sortItems.Add(GetSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+          } else if (isBDSP) {
+            sortItems.Add(GetSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
           } else if (isPLA) {
             sortItems.Add(GetSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
           }
         }
-      } else {
-        if (isLetsGo) {
-          sortItems.Add(GetSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
-        } else if (isBDSP) {
-          sortItems.Add(GetSortButton("Gen 1 Kanto", Gen1_Kanto.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 2 Johto", Gen2_Johto.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 3 Hoenn", Gen3_Hoenn.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 3 Kanto", Gen3_Kanto.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 4 Sinnoh Diamond/Pearl", Gen4_Sinnoh.GetDPSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 4 Sinnoh Platinum", Gen4_Sinnoh.GetPtSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 4 Johto", Gen4_Johto.GetSortFunctions()));
-          sortItems.Add(GetSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
-        }
-      }
 
-      if(gen != 1 && !isLetsGo) {
-        ToolStripMenuItem sortButton = new ToolStripMenuItem("National Pokédex");
-        sortButton.Click += (s, e) => SortByNationalDex();
-        sortItems.Add(sortButton);
+        if(gen != 1) {
+          ToolStripMenuItem sortButton = new ToolStripMenuItem("National Pokédex");
+          sortButton.Click += (s, e) => SortByNationalDex();
+          sortItems.Add(sortButton);
+        }
       }
     }
 
