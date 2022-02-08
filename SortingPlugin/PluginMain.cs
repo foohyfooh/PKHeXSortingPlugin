@@ -1,5 +1,6 @@
 using PKHeX.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -120,18 +121,13 @@ namespace SortingPlugin {
     }
 
     private void SortByRegionalDex(Func<PKM, IComparable>[] sortFunctions) {
-      SaveFile save = SaveFileEditor.SAV;
-      var pokemon = save.BoxData;
-      var sorted = pokemon.OrderByCustom(sortFunctions);
-      save.BoxData = sorted.ToList();
+      IEnumerable<PKM> sortMethod(IEnumerable<PKM> pkms, int i) => pkms.OrderByCustom(sortFunctions);
+      SaveFileEditor.SAV.SortBoxes(0, -1, sortMethod);
       SaveFileEditor.ReloadSlots();
     }
 
     private void SortByNationalDex() {
-      SaveFile save = SaveFileEditor.SAV;
-      var pokemon = save.BoxData;
-      var sorted = pokemon.OrderBySpecies();
-      save.BoxData = sorted.ToList();
+      SaveFileEditor.SAV.SortBoxes();
       SaveFileEditor.ReloadSlots();
     }
 

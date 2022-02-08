@@ -34,7 +34,7 @@
       <HintPath>..\packages\IndexRange.1.0.0\lib\net471\IndexRange.dll</HintPath>
     </Reference>
     <Reference Include="PKHeX.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PKHeX.Core.22.2.4\lib\net46\PKHeX.Core.dll</HintPath>
+      <HintPath>..\packages\PKHeX.Core.22.2.5\lib\net46\PKHeX.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -81,7 +81,7 @@
     <Compile Include="Gen7_Kanto.cs" />
     <Compile Include="Gen8_Galar.cs" />
     <Compile Include="Gen8_Sinnoh.cs" />
-	<Compile Include="Gen8_Hisui.cs" />
+    <Compile Include="Gen8_Hisui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
