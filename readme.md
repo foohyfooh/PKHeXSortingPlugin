@@ -8,4 +8,4 @@ The purpose of this plugin is to provide sorting by different regional Pokédex 
 - Put *SortingPlugin.dll* in the *plugins* folder that is in the same directory as the PKHeX binary.
 - *Sort Boxes By* should now be in the *Tools* menu of PKHeX.
 
-*If you are confused on the setup then you can follow the instructions from PKHex-Plugins [here](https://github.com/architdate/PKHeX-Plugins/wiki/Installing-PKHeX-Plugins).*
+*If you are confused on the setup then you can follow the instructions from PKHeX-Plugins [here](https://github.com/architdate/PKHeX-Plugins/wiki/Installing-PKHeX-Plugins).*
