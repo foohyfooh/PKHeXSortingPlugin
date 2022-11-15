@@ -41,9 +41,9 @@ namespace SortingPlugin {
     private void LoadMenuStrip(ToolStripDropDownItem menuTools) {
       menuTools.DropDownItems.RemoveByKey("SortBoxesBy");
       ToolStripMenuItem sortBoxesItem = new ToolStripMenuItem("Sort Boxes By") {
-        Name = "SortBoxesBy"
+        Name = "SortBoxesBy",
+        Image = Properties.Resources.SortIcon
       };
-      sortBoxesItem.Image = Properties.Resources.SortIcon;
       menuTools.DropDownItems.Add(sortBoxesItem);
       ToolStripItemCollection sortItems = sortBoxesItem.DropDownItems;
 
@@ -53,9 +53,8 @@ namespace SortingPlugin {
       if (isLetsGo) {
         sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
       } else {
-        bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
         bool isBDSP = version == GameVersion.BD || version == GameVersion.SP;
-        bool isPLA = version == GameVersion.PLA;
+        bool isPLA  = version == GameVersion.PLA;
 
         if (gen >= 1) {
           sortItems.Add(GetRegionalSortButton("Gen 1 Kanto", Gen1_Kanto.GetSortFunctions()));
@@ -95,17 +94,19 @@ namespace SortingPlugin {
         }
 
         if (gen >= 8) {
-          if (isSwSh) {
+          bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
+          if (!isBDSP && !isPLA) {
             sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
             sortItems.Add(GetRegionalSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
             sortItems.Add(GetRegionalSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
             sortItems.Add(GetRegionalSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
             sortItems.Add(GetRegionalSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
-          } else if (isBDSP) {
+          }
+          if (!isSwSh) {
             sortItems.Add(GetRegionalSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
-          } else if (isPLA) {
-            sortItems.Add(GetRegionalSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
-            sortItems.Add(GetRegionalSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
+            if (!isBDSP) {
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
+            }
           }
         }
 
