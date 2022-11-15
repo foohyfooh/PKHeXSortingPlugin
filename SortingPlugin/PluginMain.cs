@@ -82,6 +82,9 @@ namespace SortingPlugin {
         }
 
         if (gen >= 6 && !isBDSP) {
+          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Central", Gen6_Kalos.GetCentralDexSortFunctions()));
+          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Costal", Gen6_Kalos.GetCostalDexSortFunctions()));
+          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Mountain", Gen6_Kalos.GetMountainDexSortFunctions()));
           sortItems.Add(GetRegionalSortButton("Gen 6 Kalos", Gen6_Kalos.GetSortFunctions()));
           sortItems.Add(GetRegionalSortButton("Gen 6 Hoenn", Gen6_Hoenn.GetSortFunctions()));
         }

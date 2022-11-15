@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SortingPlugin {
   class Gen6_Kalos : SortingBase {
 
-    private static readonly Dictionary<Species, int> CentralKalosPokedex = new Dictionary<Species, int>() {
+    private static readonly Dictionary<Species, int> CentralKalosDex = new Dictionary<Species, int>() {
       {Species.Chespin, 1},
       {Species.Quilladin, 2},
       {Species.Chesnaught, 3},
@@ -471,8 +471,20 @@ namespace SortingPlugin {
       {Species.Mewtwo, 151},
     };
 
+    public static Func<PKM, IComparable>[] GetCentralDexSortFunctions() {
+      return GenerateSortingFunctions(CentralKalosDex);
+    }
+
+    public static Func<PKM, IComparable>[] GetCostalDexSortFunctions() {
+      return GenerateSortingFunctions(CostalKalosDex);
+    }
+
+    public static Func<PKM, IComparable>[] GetMountainDexSortFunctions() {
+      return GenerateSortingFunctions(MountainKalosDex);
+    }
+
     public static Func<PKM, IComparable>[] GetSortFunctions() {
-      return GenerateSortingFunctions(new Dictionary<Species, int>[] { CentralKalosPokedex, CostalKalosDex, MountainKalosDex });
+      return GenerateSortingFunctions(new Dictionary<Species, int>[] { CentralKalosDex, CostalKalosDex, MountainKalosDex });
     }
 
   }
