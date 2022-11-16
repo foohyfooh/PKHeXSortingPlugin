@@ -105,6 +105,11 @@ namespace SortingPlugin {
           if (!isSwSh) {
             sortItems.Add(GetRegionalSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
             if (!isBDSP) {
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Obsidian Fieldlands", Gen8_Hisui.GetObsidianFieldlandsSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Crimson Mirelands", Gen8_Hisui.GetCrimsonMirelandsSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Cobalt Coastlands", Gen8_Hisui.GetCobaltCoastlandsSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Coronet Highlands", Gen8_Hisui.GetCoronetHighlandsSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Alabaster Icelands", Gen8_Hisui.GetAlabasterIcelandsSortFunctions()));
               sortItems.Add(GetRegionalSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
             }
           }
