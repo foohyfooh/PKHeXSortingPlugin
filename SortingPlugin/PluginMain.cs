@@ -90,8 +90,20 @@ namespace SortingPlugin {
         }
 
         if (gen >= 7 && !isBDSP && !isPLA) {
-          sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon", Gen7_Alola.GetFullSMSortFunctions()));
-          sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon", Gen7_Alola.GetFullUSUMSortFunctions()));
+          if (PluginSettings.Default.ShowIndividualPokedéxes) {
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon Melemele", Gen7_Alola.GetSMMelemeleSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon Akala", Gen7_Alola.GetSMAkalaSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon Ula'ula", Gen7_Alola.GetSMUlaulaSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon Poni", Gen7_Alola.GetSMPoniSortFunctions()));
+          }
+          sortItems.Add(GetRegionalSortButton("Gen 7 Alola Sun/Moon", Gen7_Alola.GetSMSortFunctions()));
+          if (PluginSettings.Default.ShowIndividualPokedéxes) {
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon Melemele", Gen7_Alola.GetUSUMMelemeleSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon Akala", Gen7_Alola.GetUSUMAkalaSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon Ula'ula", Gen7_Alola.GetUSUMUlaulaSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon Poni", Gen7_Alola.GetUSUMPoniSortFunctions()));
+          }
+          sortItems.Add(GetRegionalSortButton("Gen 7 Alola Ultra Sun/Ultra Moon", Gen7_Alola.GetUSUMSortFunctions()));
         }
 
         if (gen >= 8) {
