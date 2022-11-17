@@ -1,7 +1,6 @@
 using PKHeX.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SortingPlugin {
@@ -10,7 +9,10 @@ namespace SortingPlugin {
     public int Priority => 1; // Loading order, lowest is first.
     public ISaveFileProvider SaveFileEditor { get; private set; }
     public IPKMView PKMEditor { get; private set; }
-    private object[] globalArgs;
+
+    // Static Copies
+    private static object[] globalArgs;
+    private static ISaveFileProvider saveFileEditor;
 
     public void Initialize(params object[] args) {
       Console.WriteLine($"Loading {Name}...");
@@ -19,12 +21,13 @@ namespace SortingPlugin {
       globalArgs = args;
       SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider);
       PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView);
-      LoadMenuStrip(GetMenuFromArgs(args));
+      saveFileEditor = SaveFileEditor;
+      LoadMenuStrip();
     }
 
     public void NotifySaveLoaded() {
       Console.WriteLine($"{Name} was notified that a Save File was just loaded.");
-      LoadMenuStrip(GetMenuFromArgs(globalArgs));
+      LoadMenuStrip();
     }
 
     public bool TryLoadFile(string filePath) {
@@ -32,13 +35,9 @@ namespace SortingPlugin {
       return false; // no action taken
     }
 
-    private ToolStripDropDownItem GetMenuFromArgs(params object[] args) {
-      ToolStrip menu = (ToolStrip)Array.Find(args, z => z is ToolStrip);
+    public static void LoadMenuStrip() {
+      ToolStrip menu = (ToolStrip)Array.Find(globalArgs, z => z is ToolStrip);
       ToolStripDropDownItem menuTools = menu.Items.Find("Menu_Tools", false)[0] as ToolStripDropDownItem;
-      return menuTools;
-    }
-
-    private void LoadMenuStrip(ToolStripDropDownItem menuTools) {
       menuTools.DropDownItems.RemoveByKey("SortBoxesBy");
       ToolStripMenuItem sortBoxesItem = new ToolStripMenuItem("Sort Boxes By") {
         Name = "SortBoxesBy",
@@ -47,8 +46,8 @@ namespace SortingPlugin {
       menuTools.DropDownItems.Add(sortBoxesItem);
       ToolStripItemCollection sortItems = sortBoxesItem.DropDownItems;
 
-      int gen = SaveFileEditor.SAV.Generation;
-      GameVersion version = SaveFileEditor.SAV.Version;
+      int gen = saveFileEditor.SAV.Generation;
+      GameVersion version = saveFileEditor.SAV.Version;
       bool isLetsGo = version == GameVersion.GP || version == GameVersion.GE;
       if (isLetsGo) {
         sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
@@ -81,9 +80,11 @@ namespace SortingPlugin {
         }
 
         if (gen >= 6 && !isBDSP) {
-          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Central", Gen6_Kalos.GetCentralDexSortFunctions()));
-          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Costal", Gen6_Kalos.GetCostalDexSortFunctions()));
-          sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Mountain", Gen6_Kalos.GetMountainDexSortFunctions()));
+          if (PluginSettings.Default.ShowIndividualPokedéxes) {
+            sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Central", Gen6_Kalos.GetCentralDexSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Costal", Gen6_Kalos.GetCostalDexSortFunctions()));
+            sortItems.Add(GetRegionalSortButton("Gen 6 Kalos Mountain", Gen6_Kalos.GetMountainDexSortFunctions()));
+          }
           sortItems.Add(GetRegionalSortButton("Gen 6 Kalos", Gen6_Kalos.GetSortFunctions()));
           sortItems.Add(GetRegionalSortButton("Gen 6 Hoenn", Gen6_Hoenn.GetSortFunctions()));
         }
@@ -97,19 +98,25 @@ namespace SortingPlugin {
           bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
           if (!isBDSP && !isPLA) {
             sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
-            sortItems.Add(GetRegionalSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
-            sortItems.Add(GetRegionalSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
-            sortItems.Add(GetRegionalSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
-            sortItems.Add(GetRegionalSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+            if (PluginSettings.Default.ShowIndividualPokedéxes) {
+              sortItems.Add(GetRegionalSortButton("Gen 8 Galar", Gen8_Galar.GetGalarDexSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Galar Isle of Armor", Gen8_Galar.GetIoADexSortFunctions()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Galar Crown Tundra", Gen8_Galar.GetCTDexSortFunction()));
+              sortItems.Add(GetRegionalSortButton("Gen 8 Galar Complete", Gen8_Galar.GetFullGalarDexSortFunctions()));
+            } else {
+              sortItems.Add(GetRegionalSortButton("Gen 8 Galar", Gen8_Galar.GetFullGalarDexSortFunctions()));
+            }
           }
           if (!isSwSh) {
             sortItems.Add(GetRegionalSortButton("Gen 8 Sinnoh", Gen8_Sinnoh.GetSortFunctions()));
             if (!isBDSP) {
-              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Obsidian Fieldlands", Gen8_Hisui.GetObsidianFieldlandsSortFunctions()));
-              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Crimson Mirelands", Gen8_Hisui.GetCrimsonMirelandsSortFunctions()));
-              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Cobalt Coastlands", Gen8_Hisui.GetCobaltCoastlandsSortFunctions()));
-              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Coronet Highlands", Gen8_Hisui.GetCoronetHighlandsSortFunctions()));
-              sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Alabaster Icelands", Gen8_Hisui.GetAlabasterIcelandsSortFunctions()));
+              if (PluginSettings.Default.ShowIndividualPokedéxes) {
+                sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Obsidian Fieldlands", Gen8_Hisui.GetObsidianFieldlandsSortFunctions()));
+                sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Crimson Mirelands", Gen8_Hisui.GetCrimsonMirelandsSortFunctions()));
+                sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Cobalt Coastlands", Gen8_Hisui.GetCobaltCoastlandsSortFunctions()));
+                sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Coronet Highlands", Gen8_Hisui.GetCoronetHighlandsSortFunctions()));
+                sortItems.Add(GetRegionalSortButton("Gen 8 Hisui Alabaster Icelands", Gen8_Hisui.GetAlabasterIcelandsSortFunctions()));
+              }
               sortItems.Add(GetRegionalSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
             }
           }
@@ -117,7 +124,10 @@ namespace SortingPlugin {
 
         if(gen != 1) {
           ToolStripMenuItem nationalDexSortButton = new ToolStripMenuItem("National Pokédex");
-          nationalDexSortButton.Click += (s, e) => SortByNationalDex();
+          nationalDexSortButton.Click += (s, e) => {
+            saveFileEditor.SAV.SortBoxes();
+            saveFileEditor.ReloadSlots();
+          };
           sortItems.Add(nationalDexSortButton);
 
           if(gen >= 7 && !isBDSP) {
@@ -127,23 +137,22 @@ namespace SortingPlugin {
           }
         }
       }
+
+      ToolStripMenuItem settingsButton = new ToolStripMenuItem("Settings");
+      settingsButton.Click += (s, e) => new SettingsForm().ShowDialog();
+      sortItems.Add(settingsButton);
     }
 
-    private void SortByFunctions(Func<PKM, IComparable>[] sortFunctions) {
+    private static void SortByFunctions(Func<PKM, IComparable>[] sortFunctions) {
       IEnumerable<PKM> sortMethod(IEnumerable<PKM> pkms, int start) => pkms.OrderByCustom(sortFunctions);
-      SaveFileEditor.SAV.SortBoxes(0, -1, sortMethod);
-      SaveFileEditor.ReloadSlots();
+      saveFileEditor.SAV.SortBoxes(0, -1, sortMethod);
+      saveFileEditor.ReloadSlots();
     }
 
-    private ToolStripDropDownItem GetRegionalSortButton(string dex, Func<PKM, IComparable>[] sortFunctions) {
+    private static ToolStripDropDownItem GetRegionalSortButton(string dex, Func<PKM, IComparable>[] sortFunctions) {
       ToolStripMenuItem dexSortButton = new ToolStripMenuItem($"{dex} Regional Pokédex");
       dexSortButton.Click += (s, e) => SortByFunctions(sortFunctions);
       return dexSortButton;
-    }
-
-    private void SortByNationalDex() {
-      SaveFileEditor.SAV.SortBoxes();
-      SaveFileEditor.ReloadSlots();
     }
 
   }
