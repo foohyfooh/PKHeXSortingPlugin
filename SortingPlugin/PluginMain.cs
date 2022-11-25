@@ -144,10 +144,7 @@ namespace SortingPlugin {
 
         if(gen != 1) {
           ToolStripMenuItem nationalDexSortButton = new ToolStripMenuItem("National Pokédex");
-          nationalDexSortButton.Click += (s, e) => {
-            saveFileEditor.SAV.SortBoxes();
-            saveFileEditor.ReloadSlots();
-          };
+          nationalDexSortButton.Click += (s, e) => SortByFunctions();
           sortItems.Add(nationalDexSortButton);
 
           if(gen >= 7 && !isBDSP) {
@@ -163,9 +160,15 @@ namespace SortingPlugin {
       sortItems.Add(settingsButton);
     }
 
-    private static void SortByFunctions(Func<PKM, IComparable>[] sortFunctions) {
-      IEnumerable<PKM> sortMethod(IEnumerable<PKM> pkms, int start) => pkms.OrderByCustom(sortFunctions);
-      saveFileEditor.SAV.SortBoxes(0, -1, sortMethod);
+    private static void SortByFunctions(Func<PKM, IComparable>[] sortFunctions = null) {
+      int beginIndex = PluginSettings.Default.SortBeginBox - 1;
+      int endIndex = PluginSettings.Default.SortEndBox < 0 ? -1 : PluginSettings.Default.SortEndBox - 1;
+      if (sortFunctions != null) {
+        IEnumerable<PKM> sortMethod(IEnumerable<PKM> pkms, int start) => pkms.OrderByCustom(sortFunctions);
+        saveFileEditor.SAV.SortBoxes(beginIndex, endIndex, sortMethod);
+      } else {
+        saveFileEditor.SAV.SortBoxes(beginIndex, endIndex);
+      }
       saveFileEditor.ReloadSlots();
     }
 
