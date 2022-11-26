@@ -115,7 +115,10 @@ namespace SortingPlugin {
         if (gen >= 8) {
           bool isSwSh = version == GameVersion.SW || version == GameVersion.SH;
           if (!isBDSP && !isPLA) {
-            sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
+            bool isScVi = version == GameVersion.SL || version == GameVersion.VL;
+            if (!isScVi) {
+              sortItems.Add(GetRegionalSortButton("Gen 7 Kanto", Gen7_Kanto.GetSortFunctions()));
+            }
             if (PluginSettings.Default.ShowIndividualPokedéxes) {
               sortItems.Add(GetAreaButtons("Gen 8 Galar Areas", new ToolStripItem[] {
                 GetRegionalSortButton("Galar", Gen8_Galar.GetGalarDexSortFunctions()),
@@ -140,6 +143,10 @@ namespace SortingPlugin {
               sortItems.Add(GetRegionalSortButton("Gen 8 Hisui", Gen8_Hisui.GetSortFunctions()));
             }
           }
+        }
+
+        if (gen >= 9) {
+          sortItems.Add(GetRegionalSortButton("Gen 9 Paldea", Gen9_Paldea.GetSortFunctions()));
         }
 
         if(gen != 1) {
