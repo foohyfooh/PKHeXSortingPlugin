@@ -69,6 +69,9 @@ namespace SortingPlugin {
       if (species == Species.Avalugg && pkm.Form == 1) return 8;
       if (species == Species.Decidueye && pkm.Form == 1) return 8;
 
+      if (species == Species.Tauros && 1 <= pkm.Form && pkm.Form <= 3) return 9;
+      if (species == Species.Wooper && pkm.Form == 1) return 9;
+
       // Handle Dexes
       // Gen 1 Kanto
       if (1 <= pkm.Species && pkm.Species <= 151) return 1;
