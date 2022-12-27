@@ -91,6 +91,8 @@ namespace SortingPlugin {
       if (810 <= pkm.Species && pkm.Species <= 898) return 8;
       // Gen 8 Hisui
       if (899 <= pkm.Species && pkm.Species <= 905) return 8;
+      // Gen 9 Paldea
+      if (906 <= pkm.Species && pkm.Species <= 1010) return 9;
 
       // Default Value
       return int.MaxValue;
