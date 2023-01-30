@@ -4,7 +4,7 @@ using System;
 namespace SortingPlugin {
   class Gen_National: SortingBase {
 
-    private static int SortRegionalForms(PKM pkm) {
+    private static double SortRegionalForms(PKM pkm) {
       Species species = (Species)pkm.Species;
 
       // Alolan Forms
@@ -51,51 +51,51 @@ namespace SortingPlugin {
       if (species == Species.Moltres && pkm.Form == 1) return 8;
 
       // Hisuian Forms
-      if (species == Species.Growlithe && pkm.Form == 1) return 8;
-      if (species == Species.Arcanine && pkm.Form == 1) return 8;
-      if (species == Species.Voltorb && pkm.Form == 1) return 8;
-      if (species == Species.Electrode && pkm.Form == 1) return 8;
-      if (species == Species.Typhlosion && pkm.Form == 1) return 8;
-      if (species == Species.Qwilfish && pkm.Form == 1) return 8;
-      if (species == Species.Sneasel && pkm.Form == 1) return 8;
-      if (species == Species.Samurott && pkm.Form == 1) return 8;
-      if (species == Species.Lilligant && pkm.Form == 1) return 8;
-      if (species == Species.Basculin && pkm.Form == 2) return 8;
-      if (species == Species.Zorua && pkm.Form == 1) return 8;
-      if (species == Species.Zoroark && pkm.Form == 1) return 8;
-      if (species == Species.Braviary && pkm.Form == 1) return 8;
-      if (species == Species.Sliggoo && pkm.Form == 1) return 8;
-      if (species == Species.Goodra && pkm.Form == 1) return 8;
-      if (species == Species.Avalugg && pkm.Form == 1) return 8;
-      if (species == Species.Decidueye && pkm.Form == 1) return 8;
+      if (species == Species.Growlithe && pkm.Form == 1) return 8.5;
+      if (species == Species.Arcanine && pkm.Form == 1) return 8.5;
+      if (species == Species.Voltorb && pkm.Form == 1) return 8.5;
+      if (species == Species.Electrode && pkm.Form == 1) return 8.5;
+      if (species == Species.Typhlosion && pkm.Form == 1) return 8.5;
+      if (species == Species.Qwilfish && pkm.Form == 1) return 8.5;
+      if (species == Species.Sneasel && pkm.Form == 1) return 8.5;
+      if (species == Species.Samurott && pkm.Form == 1) return 8.5;
+      if (species == Species.Lilligant && pkm.Form == 1) return 8.5;
+      if (species == Species.Basculin && pkm.Form == 2) return 8.5;
+      if (species == Species.Zorua && pkm.Form == 1) return 8.5;
+      if (species == Species.Zoroark && pkm.Form == 1) return 8.5;
+      if (species == Species.Braviary && pkm.Form == 1) return 8.5;
+      if (species == Species.Sliggoo && pkm.Form == 1) return 8.5;
+      if (species == Species.Goodra && pkm.Form == 1) return 8.5;
+      if (species == Species.Avalugg && pkm.Form == 1) return 8.5;
+      if (species == Species.Decidueye && pkm.Form == 1) return 8.5;
 
       if (species == Species.Tauros && 1 <= pkm.Form && pkm.Form <= 3) return 9;
       if (species == Species.Wooper && pkm.Form == 1) return 9;
 
       // Handle Dexes
       // Gen 1 Kanto
-      if (1 <= pkm.Species && pkm.Species <= 151) return 1;
+      if (  1 <= pkm.Species && pkm.Species <=  151) return 1;
       // Gen 2 Johto
-      if (152 <= pkm.Species && pkm.Species <= 251) return 2;
+      if (152 <= pkm.Species && pkm.Species <=  251) return 2;
       // Gen 3 Hoenn
-      if (252 <= pkm.Species && pkm.Species <= 386) return 3;
+      if (252 <= pkm.Species && pkm.Species <=  386) return 3;
       // Gen 4 Sinnoh
-      if (387 <= pkm.Species && pkm.Species <= 493) return 4;
+      if (387 <= pkm.Species && pkm.Species <=  493) return 4;
       // Gen 5 Unova
-      if (494 <= pkm.Species && pkm.Species <= 649) return 5;
+      if (494 <= pkm.Species && pkm.Species <=  649) return 5;
       // Gen 6 Kalos
-      if (650 <= pkm.Species && pkm.Species <= 721) return 6;
+      if (650 <= pkm.Species && pkm.Species <=  721) return 6;
       // Gen 7 Alola
-      if (722 <= pkm.Species && pkm.Species <= 809) return 7;
+      if (722 <= pkm.Species && pkm.Species <=  809) return 7;
       // Gen 8 Galar
-      if (810 <= pkm.Species && pkm.Species <= 898) return 8;
+      if (810 <= pkm.Species && pkm.Species <=  898) return 8;
       // Gen 8 Hisui
-      if (899 <= pkm.Species && pkm.Species <= 905) return 8;
+      if (899 <= pkm.Species && pkm.Species <=  905) return 8.5;
       // Gen 9 Paldea
-      if (906 <= pkm.Species && pkm.Species <= 1010) return 9;
+      if (906 <= pkm.Species && pkm.Species <= 1008) return 9;
 
       // Default Value
-      return int.MaxValue;
+      return double.MaxValue;
     }
 
     public static Func<PKM, IComparable>[] GetNationalDexWithRegionalFormsSortFunctions() {

@@ -1,7 +1,4 @@
 using PKHeX.Core;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace SortingPlugin {
   public class SortingPlugin : IPlugin {
@@ -11,16 +8,16 @@ namespace SortingPlugin {
     public IPKMView PKMEditor { get; private set; }
 
     // Static Copies
-    private static object[] globalArgs;
-    private static ISaveFileProvider saveFileEditor;
+    private static object[]? globalArgs;
+    private static ISaveFileProvider? saveFileEditor;
 
     public void Initialize(params object[] args) {
       Console.WriteLine($"Loading {Name}...");
       if (args == null)
         return;
       globalArgs = args;
-      SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider);
-      PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView);
+      SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
+      PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
       saveFileEditor = SaveFileEditor;
       LoadMenuStrip();
     }
@@ -167,7 +164,7 @@ namespace SortingPlugin {
       sortItems.Add(settingsButton);
     }
 
-    private static void SortByFunctions(Func<PKM, IComparable>[] sortFunctions = null) {
+    private static void SortByFunctions(Func<PKM, IComparable>[]? sortFunctions = null) {
       int beginIndex = PluginSettings.Default.SortBeginBox - 1;
       int endIndex = PluginSettings.Default.SortEndBox < 0 ? -1 : PluginSettings.Default.SortEndBox - 1;
       if (sortFunctions != null) {
