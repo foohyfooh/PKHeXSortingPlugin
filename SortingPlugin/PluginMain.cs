@@ -4,8 +4,8 @@ namespace SortingPlugin {
   public class SortingPlugin : IPlugin {
     public string Name => nameof(SortingPlugin);
     public int Priority => 1; // Loading order, lowest is first.
-    public ISaveFileProvider SaveFileEditor { get; private set; }
-    public IPKMView PKMEditor { get; private set; }
+    public ISaveFileProvider SaveFileEditor { get; private set; } = null!;
+    public IPKMView PKMEditor { get; private set; } = null!;
 
     // Static Copies
     private static object[]? globalArgs;
@@ -13,8 +13,7 @@ namespace SortingPlugin {
 
     public void Initialize(params object[] args) {
       Console.WriteLine($"Loading {Name}...");
-      if (args == null)
-        return;
+      if (args == null) return;
       globalArgs = args;
       SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
       PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
@@ -33,14 +32,16 @@ namespace SortingPlugin {
     }
 
     public static void LoadMenuStrip() {
-      ToolStrip menu = (ToolStrip)Array.Find(globalArgs, z => z is ToolStrip);
-      ToolStripDropDownItem menuTools = menu.Items.Find("Menu_Tools", false)[0] as ToolStripDropDownItem;
-      menuTools.DropDownItems.RemoveByKey("SortBoxesBy");
+      if (globalArgs == null || saveFileEditor == null) return;
+
+      ToolStrip menu = (ToolStrip)Array.Find(globalArgs, z => z is ToolStrip)!;
+      ToolStripDropDownItem? menuTools = menu.Items.Find("Menu_Tools", false)[0] as ToolStripDropDownItem;
+      menuTools?.DropDownItems.RemoveByKey("SortBoxesBy");
       ToolStripMenuItem sortBoxesItem = new ToolStripMenuItem("Sort Boxes By") {
         Name = "SortBoxesBy",
         Image = Properties.Resources.SortIcon
       };
-      menuTools.DropDownItems.Add(sortBoxesItem);
+      menuTools?.DropDownItems.Add(sortBoxesItem);
       ToolStripItemCollection sortItems = sortBoxesItem.DropDownItems;
 
       int gen = saveFileEditor.SAV.Generation;
@@ -169,11 +170,11 @@ namespace SortingPlugin {
       int endIndex = PluginSettings.Default.SortEndBox < 0 ? -1 : PluginSettings.Default.SortEndBox - 1;
       if (sortFunctions != null) {
         IEnumerable<PKM> sortMethod(IEnumerable<PKM> pkms, int start) => pkms.OrderByCustom(sortFunctions);
-        saveFileEditor.SAV.SortBoxes(beginIndex, endIndex, sortMethod);
+        saveFileEditor?.SAV.SortBoxes(beginIndex, endIndex, sortMethod);
       } else {
-        saveFileEditor.SAV.SortBoxes(beginIndex, endIndex);
+        saveFileEditor?.SAV.SortBoxes(beginIndex, endIndex);
       }
-      saveFileEditor.ReloadSlots();
+      saveFileEditor?.ReloadSlots();
     }
 
     private static ToolStripItem GetRegionalSortButton(string dex, Func<PKM, IComparable>[] sortFunctions) {

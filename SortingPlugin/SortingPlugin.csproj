@@ -4,15 +4,15 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<UseWindowsForms>true</UseWindowsForms>
-	<PackageId>SortingPlugin</PackageId>
-	<Title>SortingPlugin</Title>
-	<Version>0.0.13</Version>
-	<Product>SortingPlugin</Product>
-	<Company>foohyfooh</Company>
-	<Authors>foohyfooh</Authors>
-	<Copyright>Copyright ©  2020</Copyright>
-	<PackageIcon>SortIcon.png</PackageIcon>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PackageId>SortingPlugin</PackageId>
+    <Title>SortingPlugin</Title>
+    <Version>0.0.13</Version>
+    <Product>SortingPlugin</Product>
+    <Company>foohyfooh</Company>
+    <Authors>foohyfooh</Authors>
+    <Copyright>Copyright ©  2020</Copyright>
+    <PackageIcon>SortIcon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
