@@ -69,6 +69,7 @@ namespace SortingPlugin {
       if (species == Species.Avalugg && pkm.Form == 1) return 8.5;
       if (species == Species.Decidueye && pkm.Form == 1) return 8.5;
 
+      // Paldean Forms
       if (species == Species.Tauros && 1 <= pkm.Form && pkm.Form <= 3) return 9;
       if (species == Species.Wooper && pkm.Form == 1) return 9;
 
