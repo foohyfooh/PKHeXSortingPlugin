@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <PackageId>SortingPlugin</PackageId>
     <Title>SortingPlugin</Title>
-    <Version>0.0.13</Version>
+    <Version>0.0.14</Version>
     <Product>SortingPlugin</Product>
     <Company>foohyfooh</Company>
     <Authors>foohyfooh</Authors>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PKHeX.Core" Version="23.1.30" />
+    <PackageReference Include="PKHeX.Core" Version="23.2.27" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
