@@ -1,4 +1,4 @@
-# PKHeX Sorting Plugin
+# PKHeX Sorting Plugin (Archived; moved to [PKHeXPluginPile](https://github.com/foohyfooh/PKHeXPluginPile))
 
 The purpose of this plugin is to provide sorting by different regional Pokédex in [PKHeX](https://github.com/kwsch/PKHeX).
 
